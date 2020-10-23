@@ -9,7 +9,7 @@
 # Ingeniería en Sistemas Computacionales
 # Lenguajes de interfaz 
 
-# Practica Bloque: 2.3
+# Practica Bloque: 2.2
 # Objetivo: 
 
 
