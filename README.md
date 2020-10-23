@@ -10,8 +10,7 @@
 # Lenguajes de interfaz 
 
 # Practica Bloque: 2.2
-# Objetivo: 
-
+# Objetivo: Lectura y ejercicios de ARM32 del ebook OpenSource
 
 # Estrada Gallegos Luis Humberto 17211520
    
