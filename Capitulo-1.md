@@ -10,14 +10,14 @@ llevándose ARM Holdings un pequeño porcentaje por la licencia.
 La arquitectura ARMv6 presenta un conjunto de 17 registros (16 principales más
 uno de estado) de 32 bits cada uno.
 # Esquema de almacenamiento
-![](img/Esq1.png)
+![](img/Esq1.PNG)
 # 1.1.2. El lenguaje ensamblador
 El ensamblador es un lenguaje de bajo nivel que permite un control directo de
 la CPU y todos los elementos asociados. Cada línea de un programa ensamblador
 consta de una instrucción del procesador y la posición que ocupan los datos de esa
 instrucción.
 # 1.1.3. El entorno
-![](img/Ent1.png)
+![](img/Ent1.PNG)
 # 1.1.5. Aspecto de un programa en ensamblador
 ```bash
 .data
