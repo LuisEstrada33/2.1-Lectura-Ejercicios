@@ -38,3 +38,98 @@ puntero_var1 : .word var1
 puntero_var2 : .word var2
 puntero_var3 : .word var3
 ```
+# Datos
+Los datos se pueden representar de distintas maneras. Para representar números
+tenemos 4 bases. La más habitual es en su forma decimal, la cual no lleva ningún
+delimitador especial. Luego tenemos otra muy útil que es la representación hexadecimal, que indicaremos con el prefijo 0x
+
+# Símbolos
+Como las etiquetas se pueden ubicar tanto en la sección de datos como en la de
+código, la versatilidad que nos dan las mismas es enorme. En la zona de datos, las
+etiquetas pueden representar variables, constantes y cadenas. En la zona de código
+podemos usar etiquetas de salto, funciones y punteros a zona de datos.
+
+# Directivas
+Las directivas son expresiones que aparecen en el módulo fuente e indican al
+compilador que realice determinadas tareas en el proceso de compilación. Son fácilmente distinguibles de las instrucciones porque siempre comienzan con un punto.
+
+# 1.2. Enunciados de la práctica
+# Enteros y naturales
+```bash
+data
+var1 : .byte 0b00110010
+.align
+var2 : .byte 0b11000000
+.align
+text
+.global main
+main : ldr r1, = var1 /* r1 <- & var1 */
+ldrsb r1, [ r1 ] /* r1 <- *r1 */
+ldr r2, = var2 /* r2 <- & var2 */
+ldrsb r2, [ r2 ] /* r2 <- *r2 */
+add r0, r1, r2 /* r0 <- r1 + r2 */
+bx lr
+```
+# Instrucciones lógicas
+```bash
+text
+.global main
+main : mov r2, # 0b11110000 /* r2 <- 11110000 */
+mov r3, # 0b10101010 /* r3 <- 10101010 */
+and r0, r2, r3 /* r0 <- r2 AND r3 */
+orr r1, r2, r3 /* r1 <- r2 OR r3 */
+mvn r4, r0 /* r4 <- NOT r0 */
+mov r0, # 0x80000000
+tst r0, # 0x80000000
+tst r0, # 0x40000000
+bx lr
+```
+# Rotaciones y desplazamientos
+```bash
+.data
+var1 : .word 0x80000000
+.text
+.global main
+main : ldr r0, = var1 /* r0 <- & var1 */
+ldr r1, [ r0 ] /* r1 <- *r0 */
+LSRs r1, r1, #1 /* r1 <- r1 LSR #1 */
+LSRs r1, r1, #3 /* r1 <- r1 LSR #3 */
+ldr r2, [ r0 ] /* r2 <- *r0 */
+ASRs r2, r2, #1 /* r2 <- r2 ASR #1 */
+ASRs r2, r2, #3 /* r2 <- r2 ASR #3 */
+ldr r3, [ r0 ] /* r3 <- *r0 */
+RORs r3, r3, # 31 /* r3 <- r3 ROL #1 */
+RORs r3, r3, # 31 /* r3 <- r3 ROL #1 */
+RORs r3, r3, # 24 /* r3 <- r3 ROL #8 */
+ldr r4, [ r0 ] /* r4 <- *r0 */
+msr cpsr_f, #0 /* C=0 */
+adcs r4, r4, r4 /* rotar izda carry */
+adcs r4, r4, r4 /* rotar izda carry */
+adcs r4, r4, r4 /* rotar izda carry */
+msr cpsr_f, # 0x20000000 /* C=1 */
+adcs r4, r4, r4 /* rotar izda carry */
+bx lr
+```
+# Instrucciones de multiplicación
+```bash
+.data
+var1 : .word 0x12345678
+var2 : .word 0x87654321
+var3 : .word 0x00012345
+.text
+.global main
+main : ldr r0, = var1 /* r0 <- & var1 */
+ldr r1, = var2 /* r1 <- & var2 */
+ldr r2, = var3 /* r2 <- & var3 */
+ldrh r3, [ r0 ] /* r3 <- baja (* r0) */
+ldrh r4, [ r1 ] /* r4 <- baja (* r1) */
+muls r5, r3, r4 /* r5 <- r3*r4 */
+ldr r3, [ r0 ] /* r3 <- *r0 */
+ldr r4, [ r1 ] /* r4 <- *r1 */
+umull r5, r6, r3, r4 /* r6:r5 <- r3*r4 */
+smull r5, r6, r3, r4 /* r6:r5 <- r3*r4 */
+ldrh r3, [ r0 ] /* r3 <- baja (* r0) */
+ldr r4, [ r2 ] /* r4 <- *r2 */
+smulwb r5, r3, r4 /* r5 <- r3* baja (r4) */
+smultt r5, r3, r4 /* r5 <- alta (r3 )* alta (r4)*/
+```
